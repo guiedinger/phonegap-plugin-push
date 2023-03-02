@@ -25,8 +25,8 @@
     </config-file>
     <config-file target="AndroidManifest.xml" parent="/manifest/application">
       <activity android:name="com.adobe.phonegap.push.PushHandlerActivity" android:exported="true" android:permission="${applicationId}.permission.PushHandlerActivity"/>
-      <receiver android:name="com.adobe.phonegap.push.BackgroundActionButtonHandler"/>
-      <receiver android:name="com.adobe.phonegap.push.PushDismissedHandler"/>
+      <receiver android:name="com.adobe.phonegap.push.BackgroundActionButtonHandler" android:exported="false"/>
+      <receiver android:name="com.adobe.phonegap.push.PushDismissedHandler" android:exported="false"/>
       <service android:name="com.adobe.phonegap.push.FCMService" android:exported="false">
         <intent-filter>
           <action android:name="com.google.firebase.MESSAGING_EVENT"/>
