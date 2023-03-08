@@ -7,8 +7,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
-import android.support.v4.app.RemoteInput;
-
+import androidx.core.app.RemoteInput;
 
 public class PushHandlerActivity extends Activity implements PushConstants {
     private static String LOG_TAG = "Push_HandlerActivity";
@@ -17,6 +16,7 @@ public class PushHandlerActivity extends Activity implements PushConstants {
      * this activity will be started if the user touches a notification that we own.
      * We send it's data off to the push plugin for processing.
      * If needed, we boot up the main activity to kickstart the application.
+     * 
      * @see android.app.Activity#onCreate(android.os.Bundle)
      */
     @Override
@@ -37,15 +37,16 @@ public class PushHandlerActivity extends Activity implements PushConstants {
         boolean dismissed = getIntent().getExtras().getBoolean(DISMISSED, false);
         Log.d(LOG_TAG, "dismissed = " + dismissed);
 
-        if(!startOnBackground){
-            NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        if (!startOnBackground) {
+            NotificationManager notificationManager = (NotificationManager) getSystemService(
+                    Context.NOTIFICATION_SERVICE);
             notificationManager.cancel(FCMService.getAppName(this), notId);
         }
 
         boolean isPushPluginActive = PushPlugin.isActive();
         boolean inline = processPushBundle(isPushPluginActive, intent);
 
-        if(inline && android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.N && !startOnBackground){
+        if (inline && android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.N && !startOnBackground) {
             foreground = true;
         }
 
@@ -53,12 +54,12 @@ public class PushHandlerActivity extends Activity implements PushConstants {
 
         finish();
 
-        if(!dismissed) {
+        if (!dismissed) {
             Log.d(LOG_TAG, "isPushPluginActive = " + isPushPluginActive);
             if (!isPushPluginActive && foreground && inline) {
                 Log.d(LOG_TAG, "forceMainActivityReload");
                 forceMainActivityReload(false);
-            } else if(startOnBackground) {
+            } else if (startOnBackground) {
                 Log.d(LOG_TAG, "startOnBackgroundTrue");
                 forceMainActivityReload(true);
             } else {
@@ -120,7 +121,8 @@ public class PushHandlerActivity extends Activity implements PushConstants {
     @Override
     protected void onResume() {
         super.onResume();
-        final NotificationManager notificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
+        final NotificationManager notificationManager = (NotificationManager) this
+                .getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.cancelAll();
     }
 }

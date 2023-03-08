@@ -23,9 +23,9 @@ import android.graphics.Canvas;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.NotificationCompat.WearableExtender;
-import android.support.v4.app.RemoteInput;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationCompat.WearableExtender;
+import androidx.core.app.RemoteInput;
 import android.text.Html;
 import android.text.Spanned;
 import android.util.Log;
@@ -110,7 +110,8 @@ public class FCMService extends FirebaseMessagingService implements PushConstant
         extras.putBoolean(COLDSTART, false);
         PushPlugin.sendExtras(extras);
       }
-      // if we are in the foreground and forceShow is `true`, force show the notification if the data has at least a message or title
+      // if we are in the foreground and forceShow is `true`, force show the
+      // notification if the data has at least a message or title
       else if (forceShow && PushPlugin.isInForeground()) {
         Log.d(LOG_TAG, "foreground force");
         extras.putBoolean(FOREGROUND, true);
@@ -118,7 +119,8 @@ public class FCMService extends FirebaseMessagingService implements PushConstant
 
         showNotificationIfPossible(applicationContext, extras);
       }
-      // if we are not in the foreground always send notification if the data has at least a message or title
+      // if we are not in the foreground always send notification if the data has at
+      // least a message or title
       else {
         Log.d(LOG_TAG, "background");
         extras.putBoolean(FOREGROUND, false);
@@ -228,7 +230,8 @@ public class FCMService extends FirebaseMessagingService implements PushConstant
 
       Log.d(LOG_TAG, "key = " + key);
 
-      // If normalizeKeythe key is "data" or "message" and the value is a json object extract
+      // If normalizeKeythe key is "data" or "message" and the value is a json object
+      // extract
       // This is to support parse.com and other services. Issue #147 and pull #218
       if (key.equals(PARSE_COM_DATA) || key.equals(MESSAGE) || key.equals(messageKey)) {
         Object json = extras.get(key);
@@ -252,8 +255,7 @@ public class FCMService extends FirebaseMessagingService implements PushConstant
 
                 newExtras.putString(jsonKey, value);
               }
-            }
-            else if (data.has(LOC_KEY) || data.has(LOC_DATA)) {
+            } else if (data.has(LOC_KEY) || data.has(LOC_DATA)) {
               String newKey = normalizeKey(key, messageKey, titleKey);
               Log.d(LOG_TAG, "replace key " + key + " with " + newKey);
               replaceKey(context, key, newKey, extras, newExtras);
@@ -472,12 +474,12 @@ public class FCMService extends FirebaseMessagingService implements PushConstant
     }
 
     /*
-     *  LED Notification
+     * LED Notification
      */
     setNotificationLedColor(extras, mBuilder);
 
     /*
-     *  Priority Notification
+     * Priority Notification
      */
     setNotificationPriority(extras, mBuilder);
 
@@ -492,7 +494,7 @@ public class FCMService extends FirebaseMessagingService implements PushConstant
     setNotificationCount(context, extras, mBuilder);
 
     /*
-     *  Notification ongoing
+     * Notification ongoing
      */
     setNotificationOngoing(extras, mBuilder);
 
@@ -712,10 +714,10 @@ public class FCMService extends FirebaseMessagingService implements PushConstant
         mBuilder.setStyle(bigText);
       }
       /*
-      else {
-          mBuilder.setContentText("<missing message content>");
-      }
-      */
+       * else {
+       * mBuilder.setContentText("<missing message content>");
+       * }
+       */
     }
   }
 

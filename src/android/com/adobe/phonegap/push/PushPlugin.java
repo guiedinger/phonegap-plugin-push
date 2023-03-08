@@ -12,8 +12,8 @@ import android.media.AudioAttributes;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.NotificationManagerCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import android.util.Log;
 
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -50,6 +50,7 @@ public class PushPlugin extends CordovaPlugin implements PushConstants {
 
   /**
    * Gets the application context from cordova's main activity.
+   * 
    * @return the application context
    */
   private Context getApplicationContext() {
@@ -120,8 +121,8 @@ public class PushPlugin extends CordovaPlugin implements PushConstants {
         mChannel.setSound(android.provider.Settings.System.DEFAULT_NOTIFICATION_URI, audioAttributes);
       }
 
-      //JSONArray pattern = channel.optJSONArray(CHANNEL_VIBRATION);
-      //mChannel.setVibrationPattern();
+      // JSONArray pattern = channel.optJSONArray(CHANNEL_VIBRATION);
+      // mChannel.setVibrationPattern();
 
       notificationManager.createNotificationChannel(mChannel);
     }
@@ -415,7 +416,8 @@ public class PushPlugin extends CordovaPlugin implements PushConstants {
 
   /*
    * Sends the pushbundle extras to the client application.
-   * If the client application isn't currently active and the no-cache flag is not set, it is cached for later processing.
+   * If the client application isn't currently active and the no-cache flag is not
+   * set, it is cached for later processing.
    */
   public static void sendExtras(Bundle extras) {
     if (extras != null) {
